@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/services/navigation_provider.dart';
+import 'package:newsapp/services/news_service.dart';
 import 'package:provider/provider.dart';
 
 import 'router/router.dart';
@@ -14,6 +15,9 @@ class NewsApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NavigationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NewsService(),
         ),
       ],
       child: const _App(),
