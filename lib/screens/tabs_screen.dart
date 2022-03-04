@@ -23,7 +23,9 @@ class _Pages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
     return PageView(
+      controller: navigationProvider.pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: [
         Container(
