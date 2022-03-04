@@ -32,8 +32,8 @@ class _CategoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories =
-        Provider.of<NewsService>(context, listen: false).categories;
+    final newsService = Provider.of<NewsService>(context);
+    final categories = newsService.categories;
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -48,7 +48,12 @@ class _CategoriesList extends StatelessWidget {
                 category: category,
               ),
               const SizedBox(height: 5),
-              Text(toBeginningOfSentenceCase(category.name) ?? ""),
+              Text(
+                toBeginningOfSentenceCase(category.name) ?? "",
+                style: (newsService.selectedCategory == category.name)
+                    ? TextStyle(color: Theme.of(context).primaryColor)
+                    : null,
+              ),
             ],
           ),
         );
@@ -67,9 +72,9 @@ class _CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final newsService = Provider.of<NewsService>(context);
     return GestureDetector(
       onTap: () {
-        final newsService = Provider.of<NewsService>(context, listen: false);
         newsService.selectedCategory = category.name;
       },
       child: Container(
@@ -82,7 +87,9 @@ class _CategoryButton extends StatelessWidget {
         ),
         child: Icon(
           category.icon,
-          color: Colors.black54,
+          color: (newsService.selectedCategory == category.name)
+              ? Theme.of(context).primaryColor
+              : Colors.black54,
         ),
       ),
     );
