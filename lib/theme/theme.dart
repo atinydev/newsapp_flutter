@@ -8,6 +8,9 @@ class AppTheme {
     colorScheme: const ColorScheme.light().copyWith(
       secondary: Colors.red,
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: Colors.red,
+    ),
     // textTheme: lightTextTheme,
   );
 
@@ -17,6 +20,9 @@ class AppTheme {
     primaryColor: primaryColor,
     colorScheme: const ColorScheme.dark().copyWith(
       secondary: Colors.red,
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: Colors.red,
     ),
     // textTheme: darkTextTheme,
   );
