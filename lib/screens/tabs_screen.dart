@@ -11,6 +11,7 @@ class TabsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      
       body: _Pages(),
       bottomNavigationBar: _Navigation(),
     );
@@ -25,6 +26,7 @@ class _Pages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
+    final newsService = Provider.of<NewsService>(context);
     return PageView(
       controller: navigationProvider.pageController,
       physics: const NeverScrollableScrollPhysics(),

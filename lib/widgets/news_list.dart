@@ -50,7 +50,7 @@ class _ArticleW extends StatelessWidget {
           urlToImage: article.urlToImage,
         ),
         _BodyCard(text: article.content),
-        _ButtonsCard(),
+        const _ButtonsCard(),
         const SizedBox(
           height: 10,
         ),
@@ -78,7 +78,7 @@ class _TopBarCard extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            '${index + 1} ',
+            '${index + 1}. ',
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
             ),
