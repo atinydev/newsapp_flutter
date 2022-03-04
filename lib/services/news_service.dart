@@ -8,6 +8,8 @@ import 'package:newsapp/models/models.dart';
 
 class NewsService extends ChangeNotifier {
   final headlines = <Article>[];
+  var _selectedCategory = 'business';
+
   final _authority = 'newsapi.org';
   final _unencodedPath = 'v2/top-headlines';
   final _apiKey = HardCode.env.apiKey;
@@ -20,6 +22,8 @@ class NewsService extends ChangeNotifier {
     const Category(FontAwesomeIcons.volleyballBall, 'sports'),
     const Category(FontAwesomeIcons.memory, 'technology'),
   ];
+
+  var categoryArticles = <String, List<Article>>{};
 
   NewsService() {
     getTopHeadlines();
@@ -34,5 +38,29 @@ class NewsService extends ChangeNotifier {
     final newsResponse = NewsResponse.fromJson(resp.body);
     headlines.addAll(newsResponse.articles);
     notifyListeners();
+  }
+
+  String get selectedCategory => _selectedCategory;
+
+  set selectedCategory(String value) {
+    _selectedCategory = value;
+    getArticlesByCategory(value);
+    notifyListeners();
+  }
+
+  Future<List<Article>> getArticlesByCategory(String category) async {
+    if (categoryArticles.containsKey(category)) {
+      return categoryArticles[category]!;
+    }
+    final url = Uri.https(_authority, _unencodedPath, {
+      'country': 'us',
+      'apiKey': _apiKey,
+      'category': category,
+    });
+    final resp = await http.get(url);
+    final newsResponse = NewsResponse.fromJson(resp.body);
+    categoryArticles[category] = newsResponse.articles;
+    notifyListeners();
+    return newsResponse.articles;
   }
 }
