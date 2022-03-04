@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:newsapp/models/models.dart';
 
 class NewsService extends ChangeNotifier {
-  final headlines = [];
+  final headlines = <Article>[];
   final _authority = 'newsapi.org';
   final _unencodedPath = 'v2/top-headlines';
   final _apiKey = dotenv.env['apiKey'];
