@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/services/navigation_provider.dart';
+import 'package:provider/provider.dart';
 
 class TabsScreen extends StatelessWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -42,18 +44,23 @@ class _Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: 1,
-      items: const [
-        BottomNavigationBarItem(
-          label: 'For you',
-          icon: Icon(Icons.person_outline),
-        ),
-        BottomNavigationBarItem(
-          label: 'Headlines',
-          icon: Icon(Icons.public),
-        ),
-      ],
+    return Consumer<NavigationProvider>(
+      builder: (context, navigationProvider, child) {
+        return BottomNavigationBar(
+          currentIndex: navigationProvider.currentPage,
+          onTap: (index) => navigationProvider.currentPage = index,
+          items: const [
+            BottomNavigationBarItem(
+              label: 'For you',
+              icon: Icon(Icons.person_outline),
+            ),
+            BottomNavigationBarItem(
+              label: 'Headlines',
+              icon: Icon(Icons.public),
+            ),
+          ],
+        );
+      },
     );
   }
 }
