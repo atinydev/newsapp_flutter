@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/hardcode/hardcode.dart';
 import 'package:newsapp/models/models.dart';
 
 class NewsList extends StatelessWidget {
@@ -46,8 +47,14 @@ class _ArticleW extends StatelessWidget {
           article: article,
         ),
         _ImageCard(
-          urlToImage: article.urlToImage ?? "",
-        )
+          urlToImage: article.urlToImage,
+        ),
+        _BodyCard(text: article.content),
+        _ButtonsCard(),
+        const SizedBox(
+          height: 10,
+        ),
+        const Divider(),
       ],
     );
   }
@@ -71,16 +78,13 @@ class _TopBarCard extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            '${index + 1}',
+            '${index + 1} ',
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           Text(
             article.source.name,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
           ),
         ],
       ),
@@ -117,10 +121,73 @@ class _ImageCard extends StatelessWidget {
     required this.urlToImage,
   }) : super(key: key);
 
-  final String urlToImage;
+  final String? urlToImage;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(50),
+          bottomRight: Radius.circular(50),
+        ),
+        child: (urlToImage != null)
+            ? FadeInImage(
+                placeholder: AssetImage(HardCode.images.loadingGif),
+                image: NetworkImage(urlToImage!),
+              )
+            : Image.asset(HardCode.images.noImagePng),
+      ),
+    );
+  }
+}
+
+class _BodyCard extends StatelessWidget {
+  const _BodyCard({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  final String? text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Text(text ?? ''),
+    );
+  }
+}
+
+class _ButtonsCard extends StatelessWidget {
+  const _ButtonsCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RawMaterialButton(
+          onPressed: () {},
+          fillColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Icon(Icons.star_border),
+        ),
+        const SizedBox(width: 10),
+        RawMaterialButton(
+          onPressed: () {},
+          fillColor: Colors.blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Icon(Icons.more),
+        ),
+      ],
+    );
   }
 }

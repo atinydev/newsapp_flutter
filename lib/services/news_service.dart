@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:newsapp/hardcode/hardcode.dart';
 import 'package:newsapp/models/models.dart';
 
 class NewsService extends ChangeNotifier {
   final headlines = <Article>[];
   final _authority = 'newsapi.org';
   final _unencodedPath = 'v2/top-headlines';
-  final _apiKey = dotenv.env['apiKey'];
+  final _apiKey = HardCode.env.apiKey;
 
   NewsService() {
     getTopHeadlines();
