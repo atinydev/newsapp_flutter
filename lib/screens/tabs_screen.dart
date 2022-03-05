@@ -11,7 +11,6 @@ class TabsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      
       body: _Pages(),
       bottomNavigationBar: _Navigation(),
     );
@@ -26,7 +25,6 @@ class _Pages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
-    final newsService = Provider.of<NewsService>(context);
     return PageView(
       controller: navigationProvider.pageController,
       physics: const NeverScrollableScrollPhysics(),
@@ -49,7 +47,14 @@ class _Navigation extends StatelessWidget {
       builder: (context, navigationProvider, child) {
         return BottomNavigationBar(
           currentIndex: navigationProvider.currentPage,
-          onTap: (index) => navigationProvider.currentPage = index,
+          onTap: (index) {
+            navigationProvider.currentPage = index;
+            final newService = Provider.of<NewsService>(
+              context,
+              listen: false,
+            );
+            newService.selectedCategory = newService.selectedCategory;
+          },
           items: const [
             BottomNavigationBarItem(
               label: 'For you',

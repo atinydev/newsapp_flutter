@@ -27,6 +27,9 @@ class NewsService extends ChangeNotifier {
 
   NewsService() {
     getTopHeadlines();
+    for (var item in categories) {
+      categoryArticles[item.name] = [];
+    }
   }
 
   Future<void> getTopHeadlines() async {
@@ -48,8 +51,11 @@ class NewsService extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Article> get getArticlesBySelectedCategory =>
+      categoryArticles[selectedCategory]!;
+
   Future<List<Article>> getArticlesByCategory(String category) async {
-    if (categoryArticles.containsKey(category)) {
+    if (categoryArticles[category]!.isNotEmpty) {
       return categoryArticles[category]!;
     }
     final url = Uri.https(_authority, _unencodedPath, {
