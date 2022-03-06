@@ -16,6 +16,7 @@ class _Tab1ScreenState extends State<Tab1Screen>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<NewsService>(
       builder: (context, newsService, child) {
         final headlines = newsService.headlines;
